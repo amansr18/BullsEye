@@ -1,4 +1,3 @@
-{% extends 'base.html' %}
 {% load static %}
 
 <!DOCTYPE html>
@@ -6,17 +5,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BuLLsEye Stocks</title>
+    <title>Document</title>
+    
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     
 </head>
 <body>
-    {% block plan %}
+    <div id="navbar">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+              <button class="navbar-toggler" 
+              type="button" 
+              data-bs-toggle="collapse" 
+              data-bs-target="#navbarButtonsExample" 
+              aria-expanded="false" >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <a class="navbar-brand" href="#">
+                <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Ffree-vector%2Fstock-market-logo&psig=AOvVaw0fUSlsVkd1p07omaLISnE8&ust=1707916382950000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCPD6s7qyqIQDFQAAAAAdAAAAABAE" width="36" />
+              </a>
+              <div class="collapse navbar-collapse" id="navbarButtonsExample">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#"><b>BullsEye Exchange</b></a>
+                  </li>
+                </ul>
+                <div class="d-flex align-items-center ms-auto">
+                  <button id="button" onclick="goToOrder()" class="btn btn-default px-3 me-2" >
+                    <a href="{% url 'order' %}">Orders</a>
+                  </button>
+                  <button id="button" class="btn btn-default px-3 me-2">
+                    Login
+                  </button>
+                  <button type="button" class="btn btn-primary me-3">
+                    Sign up for free
+                  </button>
+                  <a
+                    class="btn btn-subtle px-3"
+                    href="https://github.com/mdbootstrap/mdb-ui-kit"
+                    role="button"
+                    ><i class="fab fa-github"></i
+                  ></a>
+                </div>   
+              </div>
+            </div>
+          </nav>
+    </div>
+    <div id="box1">
+        <div id="sidebar">
+          <div id="addcurrency">
+            <input type="text" id="addcurrency_search" placeholder="Add Currency">
+            <button id="add_btn" type="button" class="btn btn-info">ADD</button>
+          </div>
+          <div id="currency">
+            <div id="cur_title">BTC/USDT</div>
+            <div id="order_btn">
+              <button id="btn" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#reg-modal">BUY</button>
+              <button id="btn" type="button" class="btn btn-danger">SELL</button>
+            </div>
+          </div>
+          <div id="currency">
+            <div id="cur_title">BBM/ETH</div>
+            <div id="order_btn">
+              <button id="btn" type="button" class="btn btn-success">BUY</button>
+              <button id="btn" type="button" class="btn btn-danger">SELL</button>
+            </div>
+          </div>
+          <div id="currency">
+            <div id="cur_title">ETH/USDT</div>
+            <div id="order_btn">
+              <button id="btn" type="button" class="btn btn-success">BUY</button>
+              <button id="btn" type="button" class="btn btn-danger">SELL</button>
+            </div>
+          </div>
+        </div>
+        <div id="container">
+          <div id="chart">
+            <div id="tvchart"></div>
+          </div>
+          <div id="position-dialog">
+            <div id="position-box">
+              <div id="position">
+                  <div id="pos-title"><b>Instrument</b></div>
+                  <div id="pos-title"><b>Quantity</b></div>
+                  <div id="pos-title"><b>Type</b></div>
+                  <div id="pos-title"><b>LTP</b></div>
+                  <div id="pos-title"><b>Status</b></div>
+              </div>
+          </div>
+          </div>
+        </div>      
+    </div>
 
-    <div id="chartContainer" style="height: 600px; width: 100%"></div>
-    
-
-    {% endblock %}
+    <div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="model-title" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="model-title">Buy Order</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="quantity">
+              <div style="align-items: center;"><b>Quantity</b></div>
+              <input type="text" id="qty" placeholder="Enter Quantity">
+            </div>
+            <div id="quantity">
+              <div style="align-items: center;"><b>Stoploss</b></div>
+              <input type="text" id="qty" placeholder="Enter Stoplosss">
+            </div>
+            <button id="create-order" type="button" class="btn btn-success">Create</button>
+          </div>
+        </div>    
+      </div>
+    </div>
     
 </body>
+<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+<script src="{% static 'javascript/index.js' %}"></script>
 </html>
