@@ -7,10 +7,11 @@ body{
 #navbar{
     height:60px;
     background-color: #081923;
-    padding: 2px;
     margin-bottom: 10px;
     margin: 0;
 }
+
+
 
 #button{
     color: white;
@@ -89,9 +90,9 @@ body{
 }
 
 img{
-    background-color: black;
-    width: 80%;
-    height: 100%;
+    background-color: transparent;
+    width: 50px;
+    height: 50px;
 }
 
 #reg-modal .modal-dialog {
