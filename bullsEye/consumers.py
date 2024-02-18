@@ -13,6 +13,14 @@ class YourConsumer(WebsocketConsumer):
         self.root = None
         self.ws = None
         self.ws_thread = None
+
+    def receive(self, text_data=None, bytes_data=None):
+        if text_data:
+            data = json.loads(text_data)
+            pair = data.get('trading_pair').lower()
+            print(f'Pair: {pair}')
+            # Call subscribe_to_pair with the new pair received
+            self.subscribe_to_pair(pair)
     
     def on_message(self, ws, message):
         data = json.loads(message)
@@ -27,7 +35,7 @@ class YourConsumer(WebsocketConsumer):
         volume = float(candle['v'])
         
         formatted_data =  [chart, timestamp, open_price, high_price, low_price, close_price, volume]
-        print(formatted_data)
+        #print(formatted_data)
         self.send(text_data=json.dumps(formatted_data))
     
     def on_close(self, ws):
@@ -46,10 +54,8 @@ class YourConsumer(WebsocketConsumer):
         self.ws_thread.daemon = True
         self.ws_thread.start()
         
-        # Start the Tkinter window in a separate thread
-        tkinter_thread = threading.Thread(target=self.run_tkinter)
-        tkinter_thread.daemon = True
-        tkinter_thread.start()
+
+        
 
     def disconnect(self, close_code):
         self.ws.close()
@@ -66,15 +72,3 @@ class YourConsumer(WebsocketConsumer):
         self.ws_thread.daemon = True
         self.ws_thread.start()
 
-    def get_user_input(self):
-        self.root = tk.Tk()
-        self.root.withdraw()
-        user_input = simpledialog.askstring("Input", "Enter a trading pair (e.g., btcusdt):")
-        self.root.destroy()
-        return user_input
-
-    def run_tkinter(self):
-        while True:
-            user_input = self.get_user_input()
-            if user_input:
-                self.subscribe_to_pair(user_input)

@@ -1,30 +1,7 @@
 
-//add new Instrument to the sidebar
-document.addEventListener("DOMContentLoaded", function() {
-  const addButton = document.getElementById("add_btn");
-  const sidebar = document.getElementById("sidebar");
-  const addCurrencyInput = document.getElementById("addcurrency_search");
-
-  addButton.addEventListener("click", function() {
-     const newCurrencyTitle = addCurrencyInput.value;
-      const newCurrency = document.createElement("div");
-      newCurrency.id = "currency";
-      newCurrency.innerHTML = `
-          <div id="cur_title">${newCurrencyTitle}</div>
-          <div id="order_btn">
-              <button id="btn" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#reg-modal">BUY</button>
-              <button id="btn" type="button" class="btn btn-danger">SELL</button>
-          </div>
-      `;
-      sidebar.appendChild(newCurrency);
-  });
-});
+//chart update
 
 
-
-//chart
-
-const log = console.log;
 
         const chartProperties = {
           width:1100,
@@ -95,6 +72,9 @@ const log = console.log;
         
               // Update the candlestick series with the new data
               candleSeries.update(newDataObject);
+
+              // Update LTP in position table if applicable
+              updateLTPInPositionTable(newDataObject);
             };
 
 
@@ -102,11 +82,80 @@ const log = console.log;
           console.log('WebSocket closed');
         };
 
+//subscribe to new chart data
+        function subscribeToPair(pair) {
+          const message = {
+              trading_pair: pair
+          };
+          console.log('Subscribing to', pair);
+          socket.send(JSON.stringify(message));
+      }
+
+//add new Instrument to the sidebar
+document.addEventListener("DOMContentLoaded", function() {
+  const addButton = document.getElementById("add_btn");
+  const sidebar = document.getElementById("sidebar");
+  const addCurrencyInput = document.getElementById("addcurrency_search");
+
+  addButton.addEventListener("click", function() {
+     const newCurrencyTitle = addCurrencyInput.value;
+      const newCurrency = document.createElement("div");
+      newCurrency.id = "currency";
+      newCurrency.innerHTML = `
+          <div id="cur_title">${newCurrencyTitle}</div>
+          <div id="order_btn">
+              <button id="btn" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#reg-modal">BUY</button>
+              <button id="btn" type="button" class="btn btn-danger">SELL</button>
+          </div>
+      `;
+      sidebar.appendChild(newCurrency);
+  });
+});
 
 
 
 
+// Function to update LTP in the position table
+function updateLTPInPositionTable(newDataObject) {
+  const positions = document.querySelectorAll('.position');
+  positions.forEach(position => {
+    const pair = position.querySelector('#pos-title').innerText;
+    const ltpSpan = position.querySelector(`#ltp-${pair}`);
+    if (ltpSpan) {
+      ltpSpan.textContent = newDataObject.close.toFixed(2);
+    }
+  });
+}
+
+//add new position to the position table
+
+function addPosition() {
+  const positionTable = document.getElementById("position-box");
+  var pair = document.getElementById("model-pair").innerText;
+  var quantity = document.getElementById("qty").value;
+
+  const newPosition = document.createElement("div");
+  newPosition.classList.add("position");
+  newPosition.id = "position";
+  newPosition.innerHTML = `
+      <div id="pos-title"><b>${pair}</b></div>
+      <div id="pos-title"><b>${quantity}</b></div>
+      <div id="pos-title"><b>Type</b></div>
+      <div id="pos-title"><b><span id="ltp-${pair}">-</span></b></div>
+      <div id="pos-title"><b>Status</b></div>
+      </div>
+  `;
+  const firstPosition = positionTable.firstChild;
+  positionTable.insertBefore(newPosition, firstPosition);
+};
 
 
-
+function openModal(type, pair) {
+  var myModal = new bootstrap.Modal(document.getElementById('reg-modal'));
+  var modalTitle = document.getElementById("model-title");
+  var modalPair = document.getElementById("model-pair");
+  modalTitle.innerHTML = type;
+  modalPair.innerHTML = pair;
+  myModal.show();
+}
 

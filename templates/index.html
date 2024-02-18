@@ -62,21 +62,21 @@
             <input type="text" id="addcurrency_search" placeholder="Add Currency">
             <button id="add_btn" type="button" class="btn btn-info">ADD</button>
           </div>
-          <div id="currency">
+          <div id="currency" onclick="subscribeToPair('BTCUSDT')">
             <div id="cur_title">BTC/USDT</div>
             <div id="order_btn">
-              <button id="btn" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#reg-modal">BUY</button>
+              <button id="btn" type="button" class="btn btn-success" onclick="openModal('buy','BTCUSDT')">BUY</button>
               <button id="btn" type="button" class="btn btn-danger">SELL</button>
             </div>
           </div>
-          <div id="currency">
-            <div id="cur_title">BBM/ETH</div>
+          <div id="currency" onclick="subscribeToPair('BNBUSDT')">
+            <div id="cur_title">BNB/USDT</div>
             <div id="order_btn">
-              <button id="btn" type="button" class="btn btn-success">BUY</button>
+              <button id="btn" type="button" class="btn btn-success" onclick="openModal('buy','BNBUSDT')">BUY</button>
               <button id="btn" type="button" class="btn btn-danger">SELL</button>
             </div>
           </div>
-          <div id="currency">
+          <div id="currency" onclick="subscribeToPair('ETHUSDT')">
             <div id="cur_title">ETH/USDT</div>
             <div id="order_btn">
               <button id="btn" type="button" class="btn btn-success">BUY</button>
@@ -106,6 +106,7 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
+            <h5 class="modal-pair" id="model-pair">BTCUSDT</h5>
             <h5 class="modal-title" id="model-title">Buy Order</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
@@ -118,7 +119,7 @@
               <div style="align-items: center;"><b>Stoploss</b></div>
               <input type="text" id="qty" placeholder="Enter Stoplosss">
             </div>
-            <button id="create-order" type="button" class="btn btn-success">Create</button>
+            <button id="create-order" type="button" class="btn btn-success" onclick="addPosition()">Create</button>
           </div>
         </div>    
       </div>
