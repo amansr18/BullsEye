@@ -65,38 +65,50 @@
           <div id="currency" onclick="subscribeToPair('BTCUSDT')">
             <div id="cur_title">BTC/USDT</div>
             <div id="order_btn">
-              <button id="btn" type="button" class="btn btn-success" onclick="openModal('buy','BTCUSDT')">BUY</button>
-              <button id="btn" type="button" class="btn btn-danger">SELL</button>
+              <button id="btn" type="button" class="btn btn-success" onclick="openModal('BUY','BTCUSDT')">BUY</button>
+              <button id="btn" type="button" class="btn btn-danger" onclick="openModal('SELL','BTCUSDT')">SELL</button>
             </div>
           </div>
           <div id="currency" onclick="subscribeToPair('BNBUSDT')">
             <div id="cur_title">BNB/USDT</div>
             <div id="order_btn">
-              <button id="btn" type="button" class="btn btn-success" onclick="openModal('buy','BNBUSDT')">BUY</button>
-              <button id="btn" type="button" class="btn btn-danger">SELL</button>
+              <button id="btn" type="button" class="btn btn-success" onclick="openModal('BUY','BNBUSDT')">BUY</button>
+              <button id="btn" type="button" class="btn btn-danger" onclick="openModal('SELL','BNBUSDT')">SELL</button>
             </div>
           </div>
           <div id="currency" onclick="subscribeToPair('ETHUSDT')">
             <div id="cur_title">ETH/USDT</div>
             <div id="order_btn">
-              <button id="btn" type="button" class="btn btn-success">BUY</button>
-              <button id="btn" type="button" class="btn btn-danger">SELL</button>
+              <button id="btn" type="button" class="btn btn-success" onclick="openModal('BUY','ETHUSDT')">BUY</button>
+              <button id="btn" type="button" class="btn btn-danger" onclick="openModal('SELL','ETHUSDT')">SELL</button>
             </div>
           </div>
         </div>
         <div id="container">
           <div id="chart">
+            <div id="timeStamp">
+              <button id="chart-title" type="button" class="btn btn-primary" style="font-size: 12px; font-weight: bold; height: 25px; width: 150px;"><b>BTCUSDT</b></button>
+              <button id="time_btn" type="button"  onclick="timeStampChange('1m')" class="btn btn-primary" style="font-size: 12px; height: 25px; width: 50px;"><b>1m</b></button>
+              <button id="time_btn" type="button"  onclick="timeStampChange('5m')" class="btn btn-primary" style="font-size: 12px; height: 25px; width: 50px;"><b>5m</b></button>
+              <button id="time_btn" type="button"  onclick="timeStampChange('15m')" class="btn btn-primary" style="font-size: 12px; height: 25px; width: 50px;"><b>15m</b></button>
+              <button id="time_btn" type="button"  onclick="timeStampChange('1h')" class="btn btn-primary" style="font-size: 12px; height: 25px; width: 50px;"><b>1hr</b></button>
+              <button id="time_btn" type="button"  onclick="timeStampChange('1d')" class="btn btn-primary" style="font-size: 12px; height: 25px; width: 50px;"><b>1d</b></button>
+              <button id="time_btn" type="button"  onclick="timeStampChange('1w')" class="btn btn-primary" style="font-size: 12px; height: 25px; width: 50px;"><b>1w</b></button>
+              <button id="time_btn" type="button"  onclick="timeStampChange('1M')" class="btn btn-primary" style="font-size: 12px; height: 25px; width: 50px;"><b>1m</b></button>
+            </div>
             <div id="tvchart"></div>
           </div>
           <div id="position-dialog">
+            <div id="postion-header">
+              <div id="pos-header">
+                <div id="pos-title" class="posi-title"><b>Instrument</b></div>
+                <div id="pos-title" class="posi-title"><b>Quantity</b></div>
+                <div id="pos-title" class="posi-title"><b>Type</b></div>
+                <div id="pos-title" class="posi-title"><b>LTP</b></div>
+                <div id="pos-title" class="posi-title"><b>Status</b></div>
+            </div>
             <div id="position-box">
-              <div id="position">
-                  <div id="pos-title"><b>Instrument</b></div>
-                  <div id="pos-title"><b>Quantity</b></div>
-                  <div id="pos-title"><b>Type</b></div>
-                  <div id="pos-title"><b>LTP</b></div>
-                  <div id="pos-title"><b>Status</b></div>
-              </div>
+                
           </div>
           </div>
         </div>      
@@ -107,7 +119,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-pair" id="model-pair">BTCUSDT</h5>
-            <h5 class="modal-title" id="model-title">Buy Order</h5>
+            <h5 class="modal-title" id="model-title">Buy</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">

@@ -1,3 +1,7 @@
+var curr_close = 0;
+var buy=0;
+console.log(curr_close);
+
 
 //chart update
 
@@ -52,6 +56,7 @@
                 low:  parseFloat(data[4]),
                 close: parseFloat(data[5])
             };
+            curr_close = newDataObject.close;
             
             if(newsymbol != symbol){
               symbol = newsymbol;
@@ -84,6 +89,8 @@
 
 //subscribe to new chart data
         function subscribeToPair(pair) {
+          const chartInfo = document.getElementById('chart-title');
+          chartInfo.textContent = pair;
           const message = {
               trading_pair: pair
           };
@@ -121,8 +128,9 @@ function updateLTPInPositionTable(newDataObject) {
   positions.forEach(position => {
     const pair = position.querySelector('#pos-title').innerText;
     const ltpSpan = position.querySelector(`#ltp-${pair}`);
+    const profitLoss = (newDataObject.close - buy) * 10;
     if (ltpSpan) {
-      ltpSpan.textContent = newDataObject.close.toFixed(2);
+      ltpSpan.textContent = profitLoss.toFixed(2);
     }
   });
 }
@@ -133,16 +141,18 @@ function addPosition() {
   const positionTable = document.getElementById("position-box");
   var pair = document.getElementById("model-pair").innerText;
   var quantity = document.getElementById("qty").value;
-
+  var type = document.getElementById("model-title").innerText;
+  buy = curr_close;
   const newPosition = document.createElement("div");
   newPosition.classList.add("position");
   newPosition.id = "position";
   newPosition.innerHTML = `
-      <div id="pos-title"><b>${pair}</b></div>
-      <div id="pos-title"><b>${quantity}</b></div>
-      <div id="pos-title"><b>Type</b></div>
-      <div id="pos-title"><b><span id="ltp-${pair}">-</span></b></div>
-      <div id="pos-title"><b>Status</b></div>
+      <div id="pos-title">${pair}</div>
+      <div id="pos-title">${quantity}</div>
+      <div id="pos-title">${type}</div>
+      <div id="pos-title"><span id="ltp-${pair}">-</span></div>
+      <div id="pos-title">Open</div>
+      <button id="btn-${pair}" type="button" class="btn btn-danger" style="font-size: 12px; height: 25px; width: 60px;">Close</button>
       </div>
   `;
   const firstPosition = positionTable.firstChild;
@@ -159,3 +169,15 @@ function openModal(type, pair) {
   myModal.show();
 }
 
+function timeStampChange(time){
+  url = `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${time}&limit=1000`;
+  fetch(url)
+    .then(res => res.json())
+      .then(data => {
+        const cdata = data.map(d => {
+          return {time:d[0]/1000,open:parseFloat(d[1]),high:parseFloat(d[2]),low:parseFloat(d[3]),close:parseFloat(d[4])}
+        });
+        candleSeries.setData(cdata);
+      })
+      .catch(err => console.log(err));
+}
