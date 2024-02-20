@@ -1,0 +1,24 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <div class="shadow-wrap">
+    <div class="form-wrap">
+    <h3>Login </h3>
+    <form method="POST">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit">LogIn</button>
+    </form>
+    <a class="signup-link" href="{% url "loginSignup:signup" %}">Signup</a>
+    </div>
+    </div>
+</body>
+</html>
