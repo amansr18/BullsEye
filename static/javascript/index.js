@@ -131,6 +131,15 @@ function updateLTPInPositionTable(newDataObject) {
     const profitLoss = (newDataObject.close - buy) * 10;
     if (ltpSpan) {
       ltpSpan.textContent = profitLoss.toFixed(2);
+
+      // Set color based on profit/loss
+      if (profitLoss > 0) {
+        ltpSpan.style.color = 'green';
+      } else if (profitLoss < 0) {
+        ltpSpan.style.color = 'red';
+      } else {
+        ltpSpan.style.color = ''; // Reset to default if profitLoss is 0
+      }
     }
   });
 }
@@ -147,10 +156,10 @@ function addPosition() {
   newPosition.classList.add("position");
   newPosition.id = "position";
   newPosition.innerHTML = `
-      <div id="pos-title">${pair}</div>
+      <div id="pos-title"><b>${pair}</b></div>
       <div id="pos-title">${quantity}</div>
       <div id="pos-title">${type}</div>
-      <div id="pos-title"><span id="ltp-${pair}">-</span></div>
+      <div id="pos-title" ><span id="ltp-${pair}" style="color: black; font-weight: bold;">-</span></div>
       <div id="pos-title">Open</div>
       <button id="btn-${pair}" type="button" class="btn btn-danger" style="font-size: 12px; height: 25px; width: 60px;">Close</button>
       </div>
